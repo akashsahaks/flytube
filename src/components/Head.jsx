@@ -1,18 +1,31 @@
 import React from "react";
+import { toggleMenu } from "../state/appSlice";
+import { useDispatch } from "react-redux";
 
 const Head = () => {
+   const dispatch = useDispatch();
+
+   const toggleMenuHandler = () => {
+      dispatch(toggleMenu());
+   };
+
    return (
       <>
          <div className="grid grid-flow-col p-5 shadow-lg">
             <div className="flex col-span-1">
                <div>
-                  <i class="fa-solid fa-bars fa-2xl"></i>
+                  <i
+                     className="fa-solid fa-bars fa-2xl cursor-pointer"
+                     onClick={() => toggleMenuHandler()}
+                  ></i>
                </div>{" "}
-               <img
-                  className="h-8 mx-3 pb-2"
-                  src="https://www.seekpng.com/png/full/77-772362_youtube-logo-youtube-logo-png.png"
-                  alt="youtube logo"
-               />
+               <a href="">
+                  <img
+                     className="h-8 mx-3 pb-2"
+                     src="https://www.seekpng.com/png/full/77-772362_youtube-logo-youtube-logo-png.png"
+                     alt="youtube logo"
+                  />
+               </a>
             </div>
             {/* ----- search bar ----- */}
             <div className="col-span-10 px-10">
@@ -26,7 +39,7 @@ const Head = () => {
                </button>
             </div>
             <div className="col-span-1">
-               <i class="fa-solid fa-user"></i>
+               <i className="fa-solid fa-user"></i>
             </div>
          </div>
       </>
