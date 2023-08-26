@@ -3,6 +3,23 @@ import "./App.css";
 import Body from "./components/Body";
 import Head from "./components/Head";
 import store from "./state/store";
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import MainContainer from "./components/MainContainer";
+import WatchPage from "./components/WatchPage";
+
+const appRouter = createBrowserRouter([
+   {
+      path: "/",
+      element: <Body />,
+      children: [
+         { path: "/", element: <MainContainer /> },
+         {
+            path: "watch",
+            element: <WatchPage />,
+         },
+      ],
+   },
+]);
 
 function App() {
    return (
@@ -10,7 +27,7 @@ function App() {
          <Provider store={store}>
             <div>
                <Head />
-               <Body />
+               <RouterProvider router={appRouter} />
             </div>
          </Provider>
       </>
