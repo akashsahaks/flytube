@@ -1,9 +1,15 @@
 import React from "react";
+import Button from "./Button";
 
 const ButtonList = () => {
+   const btnList = ["All", "Live", "Gaming", "Songs", "Cricket", "Cooking"];
    return (
       <>
-         <div>ButtonList</div>
+         <div className="flex">
+            {btnList?.map((btnName) => (
+               <Button btnName={btnName} key={btnName} />
+            ))}
+         </div>
       </>
    );
 };

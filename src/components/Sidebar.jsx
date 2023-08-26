@@ -8,7 +8,7 @@ const Sidebar = () => {
    return (
       isMenuOpen && (
          <>
-            <div className="p-5 shadow-lg w-48">
+            <div className="p-5 shadow-lg w-96">
                <h1 className="font-bold">Subscription</h1>
                <ul className="">
                   <li> Home</li>
