@@ -1,18 +1,25 @@
 import React, { useEffect, useState } from "react";
 import { toggleMenu } from "../state/appSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { YOUTUBE_SEARCH_API, GOOGLE_API_KEYS } from "../constant/constant";
+import { cacheResults } from "../state/searchSlice";
 
 const Head = () => {
    const [searchQuery, setSearchQuery] = useState("");
    const [suggestions, setSuggestions] = useState([]);
    const [showSuggestion, setShowSuggestion] = useState(false);
+   const searchCache = useSelector((store) => store.search);
+   const dispatch = useDispatch();
 
    useEffect(() => {
       const timerId = setTimeout(() => {
          // when searchQuery is empty it will not call
          if (searchQuery) {
-            getSearchSuggestions();
+            if (searchCache[searchQuery]) {
+               setSuggestions(searchCache[searchQuery]);
+            } else {
+               getSearchSuggestions();
+            }
          }
       }, 1000);
       return () => {
@@ -30,14 +37,19 @@ const Head = () => {
                `${GOOGLE_API_KEYS}`
          );
          const jsonData = await data.json();
-         console.log("jsonData : ", jsonData);
+         // console.log("jsonData : ", jsonData);
          setSuggestions(jsonData?.items);
+         // update cache
+         dispatch(
+            cacheResults({
+               [searchQuery]: jsonData?.items,
+            })
+         );
       } catch (error) {
          console.log("Head.jsx - getSearchSuggestions : ", error.message);
       }
    };
 
-   const dispatch = useDispatch();
    const toggleMenuHandler = () => {
       dispatch(toggleMenu());
    };
