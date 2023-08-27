@@ -11,16 +11,20 @@ const VideoContainer = () => {
    }, []);
 
    const getVideos = async () => {
-      // fetching youtube data
-      const data = await fetch(YOUTUBE_VIDEOS_API);
-      const jsonData = await data?.json();
-      // console.log(jsonData);
-      setVideos(jsonData?.items);
+      try {
+         // fetching youtube data
+         const data = await fetch(YOUTUBE_VIDEOS_API);
+         const jsonData = await data?.json();
+         // console.log(jsonData);
+         setVideos(jsonData?.items);
+      } catch (error) {
+         console.log("VideoContainer.jsx - getVideo : ", error);
+      }
    };
    return (
       <>
          <div className="flex flex-wrap justify-between px-4">
-            {videos.map((video) => (
+            {videos?.map((video) => (
                <Link to={"/watch?v=" + video?.id} key={video?.id}>
                   <VideoCard info={video} />
                </Link>
